@@ -1,4 +1,4 @@
-package com.etiya.northwind.business.responses.products.suppliers;
+package com.etiya.northwind.business.requests.customers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupplierListResponse {
-    private int supplierId;
+public class CreateCustomerRequest {
+    private String customerId;
     private String companyName;
     private String contactName;
     private String contactTitle;

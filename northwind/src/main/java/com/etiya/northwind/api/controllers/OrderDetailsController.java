@@ -2,10 +2,14 @@ package com.etiya.northwind.api.controllers;
 
 import com.etiya.northwind.business.abstracts.OrderDetailService;
 import com.etiya.northwind.business.requests.orderDetails.CreateOrderDetailRequest;
+import com.etiya.northwind.business.requests.orderDetails.DeleteOrderDetailRequest;
+import com.etiya.northwind.business.requests.orderDetails.UpdateOrderDetailRequest;
+import com.etiya.northwind.business.requests.orders.UpdateOrderRequest;
 import com.etiya.northwind.business.responses.orderDetails.OrderDetailListResponse;
 import com.etiya.northwind.business.responses.orderDetails.ReadOrderDetailResponse;
 import com.etiya.northwind.entities.concretes.Order;
 import com.etiya.northwind.entities.concretes.OrderDetail;
+import com.etiya.northwind.entities.concretes.OrderDetailId;
 import com.etiya.northwind.entities.concretes.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +39,13 @@ public class OrderDetailsController {
     @PostMapping("/add")
     public void add(CreateOrderDetailRequest createOrderDetailRequest){
         this.orderDetailService.add(createOrderDetailRequest);
+    }
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody DeleteOrderDetailRequest deleteOrderDetailRequest){
+        this.orderDetailService.delete(deleteOrderDetailRequest);
+    }
+    @PutMapping("/update")
+    public void update(@RequestBody UpdateOrderDetailRequest updateOrderDetailRequest){
+        this.orderDetailService.update(updateOrderDetailRequest);
     }
 }

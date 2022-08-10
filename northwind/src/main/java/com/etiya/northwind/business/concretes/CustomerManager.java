@@ -7,6 +7,7 @@ import com.etiya.northwind.business.requests.customers.UpdateCustomerRequest;
 import com.etiya.northwind.business.responses.customers.CustomerListResponse;
 import com.etiya.northwind.business.responses.customers.ReadCustomerResponse;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
+import com.etiya.northwind.core.utilities.sortData.SortingEntities;
 import com.etiya.northwind.dataAccess.abstracts.CustomerRepository;
 import com.etiya.northwind.entities.concretes.Category;
 import com.etiya.northwind.entities.concretes.Customer;
@@ -74,7 +75,7 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public Map<String, Object> getAllPagesOrderByEntity(int pageNumber, int pageSize, String entity, String type) {
-        Pageable pageable= PageRequest.of(pageNumber-1,pageSize,sortType(entity,type));
+        Pageable pageable= PageRequest.of(pageNumber-1,pageSize, SortingEntities.sortType(entity,type));
         return  pageableMap(pageable);
     }
     private Map<String, Object> pageableMap(Pageable pageable){
@@ -91,9 +92,5 @@ public class CustomerManager implements CustomerService {
         return response;
     }
 
-    private Sort sortType(String property, String type){
-        if (type.equals("desc"))
-            return Sort.by(property).descending();
-        else return Sort.by(property).ascending();
-    }
+
 }

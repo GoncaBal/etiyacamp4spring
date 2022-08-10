@@ -7,6 +7,7 @@ import com.etiya.northwind.business.responses.orderDetails.OrderDetailListRespon
 import com.etiya.northwind.business.responses.orderDetails.ReadOrderDetailResponse;
 import com.etiya.northwind.entities.concretes.Order;
 import com.etiya.northwind.entities.concretes.OrderDetail;
+import com.etiya.northwind.entities.concretes.OrderDetailId;
 import com.etiya.northwind.entities.concretes.Product;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface OrderDetailService {
     void delete(DeleteOrderDetailRequest deleteOrderDetailRequest);
     ReadOrderDetailResponse getById (int orderId, int productId);
     List<OrderDetailListResponse> getAll();
+
     Map<String,Object> getAllPages(int pageNumber, int pageSize);
     Map<String,Object> getAllPagesOrderByEntity(int pageNumber,int pageSize,String entity,String type);
 }

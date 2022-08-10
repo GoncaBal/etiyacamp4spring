@@ -46,12 +46,13 @@ public class OrderDetailManager implements OrderDetailService {
 
     @Override
     public void update(UpdateOrderDetailRequest updateOrderDetailRequest) {
-//        OrderDetail orderDetailToUpdate=
+        OrderDetail orderDetailToUpdate=this.modelMapperService.forRequest().map(updateOrderDetailRequest,OrderDetail.class);
+        this.orderDetailRepository.save(orderDetailToUpdate);
     }
 
     @Override
     public void delete(DeleteOrderDetailRequest deleteOrderDetailRequest) {
-
+        this.orderDetailRepository.deleteById(deleteOrderDetailRequest.getOrderDetailId());
     }
 
     @Override
@@ -93,6 +94,8 @@ public class OrderDetailManager implements OrderDetailService {
 
         return response;
     }
+
+
 
     @Override
     public Map<String, Object> getAllPages(int pageNumber, int pageSize) {

@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DeleteOrderDetailRequest {
-  private OrderDetailId id;
+  private OrderDetailId orderDetailId;
+
 }

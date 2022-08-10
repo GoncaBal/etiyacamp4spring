@@ -7,6 +7,7 @@ import com.etiya.northwind.business.requests.categories.UpdateCategoryRequest;
 import com.etiya.northwind.business.responses.categories.CategoryListResponse;
 import com.etiya.northwind.business.responses.categories.ReadCategoryResponse;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
+import com.etiya.northwind.core.utilities.sortData.SortingEntities;
 import com.etiya.northwind.dataAccess.abstracts.CategoryRepository;
 import com.etiya.northwind.entities.concretes.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public Map<String, Object> getAllPagesOrderByEntity(int pageNumber, int pageSize, String entity, String type) {
-        Pageable pageable=PageRequest.of(pageNumber-1,pageSize,sortType(entity,type));
+        Pageable pageable=PageRequest.of(pageNumber-1,pageSize, SortingEntities.sortType(entity,type));
         return  pageableMap(pageable);
     }
     private Map<String, Object> pageableMap(Pageable pageable){
@@ -93,9 +94,5 @@ public class CategoryManager implements CategoryService {
         return response;
     }
 
-    private Sort sortType(String property, String type){
-        if (type.equals("desc"))
-            return Sort.by(property).descending();
-        else return Sort.by(property).ascending();
-    }
+
 }

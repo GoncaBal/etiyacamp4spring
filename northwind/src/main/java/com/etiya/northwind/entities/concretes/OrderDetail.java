@@ -13,14 +13,20 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name="order_details")
 public class OrderDetail {
+
     @Id
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    private int orderId;
+
     @Id
-    @ManyToOne
-    @JoinColumn(name="product_id")
-    private Product product;
+    private int productId;
+//    @Id
+//    @ManyToOne
+//    @JoinColumn(name = "order_id")
+//    private Order order;
+//    @Id
+//    @ManyToOne
+//    @JoinColumn(name="product_id")
+//    private Product product;
 
     @Column(name="unit_price")
     private double unitPrice;

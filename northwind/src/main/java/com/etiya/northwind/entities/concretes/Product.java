@@ -15,7 +15,6 @@ import java.util.List;
 public class Product {
     @Id
     @Column(name = "product_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
     @Column(name = "product_name")
@@ -27,10 +26,12 @@ public class Product {
     @Column(name = "units_in_stock")
     private int unitsInStock;
 
+    @Column(name="discontinued")
+    private int discontinued;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product")
-    private List<OrderDetail> orderDetails;
+//    @OneToMany(mappedBy = "productId")
+//    private List<OrderDetail> orderDetails;
 }

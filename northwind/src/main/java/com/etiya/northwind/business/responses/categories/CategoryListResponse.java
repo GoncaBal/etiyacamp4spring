@@ -1,4 +1,4 @@
-package com.etiya.northwind.business.responses;
+package com.etiya.northwind.business.responses.categories;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryListResponse {
-private int categoryId;
-private String categoryName;
-private List<Integer> productId;
+    private int categoryId;
+    private String categoryName;
+    private String description;
 }

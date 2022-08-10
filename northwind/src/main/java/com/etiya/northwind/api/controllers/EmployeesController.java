@@ -1,6 +1,6 @@
 package com.etiya.northwind.api.controllers;
 import com.etiya.northwind.business.abstracts.EmployeeService;
-import com.etiya.northwind.business.responses.EmployeeListResponse;
+import com.etiya.northwind.business.responses.employees.EmployeeListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

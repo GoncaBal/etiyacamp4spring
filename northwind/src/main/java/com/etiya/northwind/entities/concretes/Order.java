@@ -15,7 +15,6 @@ import java.util.List;
 @Table(name="orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
     private int orderId;
 
@@ -30,6 +29,6 @@ public class Order {
     @JoinColumn(name="customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetails;
+//    @OneToMany(mappedBy = "orderId")
+//    private List<OrderDetail> orderDetails;
 }

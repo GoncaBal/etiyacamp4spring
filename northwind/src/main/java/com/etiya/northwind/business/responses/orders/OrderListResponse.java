@@ -1,4 +1,4 @@
-package com.etiya.northwind.business.responses;
+package com.etiya.northwind.business.responses.orders;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,8 +12,7 @@ import java.time.LocalDate;
 public class OrderListResponse {
     private int orderId;
     private LocalDate orderDate;
-    private String employeeFirstName;
-    private String employeeLastName;
+    private String fullName;
     private String customerCompanyName;
     private String customerContactName;
 

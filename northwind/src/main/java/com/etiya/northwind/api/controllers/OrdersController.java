@@ -1,6 +1,6 @@
 package com.etiya.northwind.api.controllers;
 import com.etiya.northwind.business.abstracts.OrderService;
-import com.etiya.northwind.business.responses.OrderListResponse;
+import com.etiya.northwind.business.responses.orders.OrderListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -11,27 +11,30 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="order_details")
+@Table(name = "order_details")
 public class OrderDetail {
 
+
     @Id
+    @Column(name = "order_id")
     private int orderId;
 
     @Id
+    @Column(name = "product_id")
     private int productId;
-//    @Id
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order;
-//    @Id
-//    @ManyToOne
-//    @JoinColumn(name="product_id")
-//    private Product product;
 
-    @Column(name="unit_price")
+    @ManyToOne
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    private Order order;
+
+    @Column(name = "unit_price")
     private double unitPrice;
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private int quantity;
-    @Column(name="discount")
+    @Column(name = "discount")
     private double discount;
 }

@@ -5,6 +5,8 @@ import com.etiya.northwind.business.requests.products.DeleteProductRequest;
 import com.etiya.northwind.business.requests.products.UpdateProductRequest;
 import com.etiya.northwind.business.responses.products.ProductListResponse;
 import com.etiya.northwind.business.responses.products.ReadProductResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 import com.etiya.northwind.entities.concretes.Product;
 import org.springframework.data.annotation.ReadOnlyProperty;
 
@@ -12,14 +14,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductService {
-    void add(CreateProductRequest createProductRequest);
-    void update(UpdateProductRequest updateProductRequest);
-    void delete(DeleteProductRequest deleteProductRequest);
-    List<ProductListResponse> getAll();
-    ReadProductResponse getById(int id);
+    Result add(CreateProductRequest createProductRequest);
 
-    Product findById(int id);
+    Result update(UpdateProductRequest updateProductRequest);
 
-    Map<String,Object> getAllPages(int pageNumber, int pageSize);
-    Map<String,Object> getAllPagesOrderByEntity(int pageNumber,int pageSize,String entity,String type);
+    Result delete(DeleteProductRequest deleteProductRequest);
+
+    DataResult<List<ProductListResponse>> getAll();
+
+    DataResult<ReadProductResponse> getById(int id);
+
+    DataResult<Map<String, Object>> getAllPages(int pageNumber, int pageSize);
+
+    DataResult<Map<String, Object>> getAllPagesOrderByEntity(int pageNumber, int pageSize, String entity, String type);
 }

@@ -6,7 +6,12 @@ import com.etiya.northwind.business.requests.customers.DeleteCustomerRequest;
 import com.etiya.northwind.business.requests.customers.UpdateCustomerRequest;
 import com.etiya.northwind.business.responses.customers.CustomerListResponse;
 import com.etiya.northwind.business.responses.customers.ReadCustomerResponse;
+import com.etiya.northwind.core.exceptions.BusinessException;
 import com.etiya.northwind.core.utilities.mapping.ModelMapperService;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
+import com.etiya.northwind.core.utilities.results.SuccessDataResult;
+import com.etiya.northwind.core.utilities.results.SuccessResult;
 import com.etiya.northwind.core.utilities.sortData.SortingEntities;
 import com.etiya.northwind.dataAccess.abstracts.CustomerRepository;
 import com.etiya.northwind.entities.concretes.Category;
@@ -29,62 +34,91 @@ public class CustomerManager implements CustomerService {
     private ModelMapperService modelMapperService;
 
     @Autowired
-    public CustomerManager(CustomerRepository customerRepository,ModelMapperService modelMapperService) {
+    public CustomerManager(CustomerRepository customerRepository, ModelMapperService modelMapperService) {
         this.customerRepository = customerRepository;
-        this.modelMapperService=modelMapperService;
+        this.modelMapperService = modelMapperService;
     }
 
     @Override
-    public void add(CreateCustomerRequest createCustomerRequest) {
-        Customer customer= this.modelMapperService.forRequest().map(createCustomerRequest,Customer.class);
+    public Result add(CreateCustomerRequest createCustomerRequest) {
+
+        Customer customer = this.modelMapperService.forRequest().map(createCustomerRequest, Customer.class);
         this.customerRepository.save(customer);
+
+        return new SuccessResult("CUSTOMER.ADDED");
     }
 
     @Override
-    public void update(UpdateCustomerRequest updateCustomerRequest) {
-        Customer customerToUpdate=this.modelMapperService.forRequest().map(updateCustomerRequest,Customer.class);
+    public Result update(UpdateCustomerRequest updateCustomerRequest) {
+
+        checkIfCustomerIdExist(updateCustomerRequest.getCustomerId());
+
+        Customer customerToUpdate = this.modelMapperService.forRequest().map(updateCustomerRequest, Customer.class);
         this.customerRepository.save(customerToUpdate);
+
+        return new SuccessResult("CUSTOMER.UPDATED");
     }
 
     @Override
-    public void delete(DeleteCustomerRequest deleteCustomerRequest) {
+    public Result delete(DeleteCustomerRequest deleteCustomerRequest) {
+
+        checkIfCustomerIdExist(deleteCustomerRequest.getCustomerId());
+
         this.customerRepository.deleteById(deleteCustomerRequest.getCustomerId());
+
+        return new SuccessResult("CUSTOMER.DELETED");
     }
 
     @Override
-    public ReadCustomerResponse getById(String id) {
+    public DataResult<ReadCustomerResponse> getById(String id) {
+
+        checkIfCustomerIdExist(id);
+
         Customer customer = this.customerRepository.findById(id).get();
-       return this.modelMapperService.forResponse().map(customer,ReadCustomerResponse.class);
 
+        ReadCustomerResponse readCustomerResponse = this.modelMapperService.forResponse()
+                .map(customer, ReadCustomerResponse.class);
+
+        return new SuccessDataResult<>(readCustomerResponse);
     }
 
     @Override
-    public List<CustomerListResponse> getAll() {
-        List<Customer> result=this.customerRepository.findAll();
-        List<CustomerListResponse> response=result.stream().map(customer -> this.modelMapperService.forResponse()
-                .map(customer,CustomerListResponse.class)).collect(Collectors.toList());
+    public DataResult<List<CustomerListResponse>> getAll() {
 
-        return response;
+        List<Customer> result = this.customerRepository.findAll();
+
+        List<CustomerListResponse> response = result.stream().map(customer -> this.modelMapperService.forResponse()
+                .map(customer, CustomerListResponse.class)).collect(Collectors.toList());
+
+        return new SuccessDataResult<>(response);
     }
 
     @Override
-    public Map<String, Object> getAllPages(int pageNumber, int pageSize) {
-        Pageable pageable=PageRequest.of(pageNumber-1,pageSize);
-        return pageableMap(pageable);
+    public DataResult<Map<String, Object>> getAllPages(int pageNumber, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
+        return new SuccessDataResult<>(pageableMap(pageable));
     }
 
     @Override
-    public Map<String, Object> getAllPagesOrderByEntity(int pageNumber, int pageSize, String entity, String type) {
-        Pageable pageable= PageRequest.of(pageNumber-1,pageSize, SortingEntities.sortType(entity,type));
-        return  pageableMap(pageable);
+    public DataResult<Map<String, Object>> getAllPagesOrderByEntity(int pageNumber, int pageSize, String entity, String type) {
+
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, SortingEntities.sortType(entity, type));
+
+        return new SuccessDataResult<>(pageableMap(pageable));
     }
-    private Map<String, Object> pageableMap(Pageable pageable){
-        Map<String,Object> response = new HashMap<>();
+
+    private Map<String, Object> pageableMap(Pageable pageable) {
+
+        Map<String, Object> response = new HashMap<>();
         Page<Customer> customers = customerRepository.findAll(pageable);
-        response.put("Total Elements",customers.getTotalElements());
-        response.put("Total Pages",customers.getTotalPages());
-        response.put("Current Page",customers.getNumber()+1);
-        response.put("Categories",customers.getContent().stream()
+
+        response.put("Total Elements", customers.getTotalElements());
+        response.put("Total Pages", customers.getTotalPages());
+        response.put("Current Page", customers.getNumber() + 1);
+
+        response.put("Customers", customers.getContent().stream()
                 .map(category -> this.modelMapperService.forResponse()
                         .map(category, CustomerListResponse.class))
                 .collect(Collectors.toList()));
@@ -92,5 +126,12 @@ public class CustomerManager implements CustomerService {
         return response;
     }
 
+    private void checkIfCustomerIdExist(String customerId){
 
+        Customer currentCustomer= this.customerRepository.findById(customerId).get();
+
+        if (currentCustomer==null){
+            throw new BusinessException("INVALID.CUSTOMER.ID");
+        }
+    }
 }

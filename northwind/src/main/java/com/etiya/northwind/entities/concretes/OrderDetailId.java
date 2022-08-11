@@ -9,6 +9,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetailId implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int orderId;
     private int productId;
 }

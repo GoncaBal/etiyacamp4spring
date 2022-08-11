@@ -29,6 +29,6 @@ public class Order {
     @JoinColumn(name="customer_id")
     private Customer customer;
 
-//    @OneToMany(mappedBy = "orderId")
-//    private List<OrderDetail> orderDetails;
+    @OneToMany(mappedBy = "orderId")
+    private List<OrderDetail> orderDetails;
 }

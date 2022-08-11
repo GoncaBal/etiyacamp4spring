@@ -5,16 +5,18 @@ import com.etiya.northwind.business.requests.employees.DeleteEmployeeRequest;
 import com.etiya.northwind.business.requests.employees.UpdateEmployeeRequest;
 import com.etiya.northwind.business.responses.employees.EmployeeListResponse;
 import com.etiya.northwind.business.responses.employees.ReadEmployeeResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 
 import java.util.List;
 import java.util.Map;
 
 public interface EmployeeService {
-    void add(CreateEmployeeRequest createEmployeeRequest);
-    void update(UpdateEmployeeRequest updateEmployeeRequest);
-    void delete(DeleteEmployeeRequest deleteEmployeeRequest);
-    List<EmployeeListResponse> getAll();
-    ReadEmployeeResponse getById(int id);
-    Map<String,Object> getAllPages(int pageNumber, int pageSize);
-    Map<String,Object> getAllPagesOrderByEntity(int pageNumber,int pageSize,String entity,String type);
+    Result add(CreateEmployeeRequest createEmployeeRequest);
+    Result update(UpdateEmployeeRequest updateEmployeeRequest);
+    Result delete(DeleteEmployeeRequest deleteEmployeeRequest);
+    DataResult<List<EmployeeListResponse>> getAll();
+    DataResult<ReadEmployeeResponse> getById(int id);
+    DataResult<Map<String,Object>> getAllPages(int pageNumber, int pageSize);
+    DataResult<Map<String,Object>> getAllPagesOrderByEntity(int pageNumber,int pageSize,String entity,String type);
 }

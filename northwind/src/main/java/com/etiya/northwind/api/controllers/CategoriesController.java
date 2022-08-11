@@ -6,9 +6,12 @@ import com.etiya.northwind.business.requests.categories.DeleteCategoryRequest;
 import com.etiya.northwind.business.requests.categories.UpdateCategoryRequest;
 import com.etiya.northwind.business.responses.categories.CategoryListResponse;
 import com.etiya.northwind.business.responses.categories.ReadCategoryResponse;
+import com.etiya.northwind.core.utilities.results.DataResult;
+import com.etiya.northwind.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,37 +27,37 @@ public class CategoriesController {
     }
 
     @GetMapping("/getall")
-    public List<CategoryListResponse> getAll() {
+    public DataResult<List<CategoryListResponse>> getAll() {
         return this.categoryService.getAll();
     }
 
     @GetMapping("/getbyid")
-    public ReadCategoryResponse getById(@RequestParam int id) {
+    public DataResult<ReadCategoryResponse> getById(@RequestParam int id) {
         return this.categoryService.getById(id);
     }
 
     @PostMapping("/add")
-    public void add(@RequestBody CreateCategoryRequest createCategoryRequest) {
-        this.categoryService.add(createCategoryRequest);
+    public Result add(@Valid @RequestBody CreateCategoryRequest createCategoryRequest)  {
+       return this.categoryService.add(createCategoryRequest);
     }
 
-    @PostMapping("/update")
-    public void update(@RequestBody UpdateCategoryRequest updateCategoryRequest) {
-        this.categoryService.update(updateCategoryRequest);
+    @PutMapping ("/update")
+    public Result update(@Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
+        return this.categoryService.update(updateCategoryRequest);
     }
 
-    @PostMapping("/delete")
-    public void delete(@RequestBody DeleteCategoryRequest deleteCategoryRequest) {
-        this.categoryService.delete(deleteCategoryRequest);
+    @DeleteMapping("/delete")
+    public Result delete(@RequestBody DeleteCategoryRequest deleteCategoryRequest) {
+        return this.categoryService.delete(deleteCategoryRequest);
     }
 
     @GetMapping("/getallpages")
-    public Map<String, Object> getAllPages(@RequestParam int pageNumber, @RequestParam int pageSize) {
+    public DataResult<Map<String, Object>> getAllPages(@RequestParam int pageNumber, @RequestParam int pageSize) {
         return this.categoryService.getAllPages(pageNumber, pageSize);
     }
 
     @GetMapping("/getallpagesortbyentity")
-    public Map<String,Object> getAllPagesOrderByEntity(@RequestParam int pageNumber, @RequestParam int pageSize, @RequestParam String entity, @RequestParam Optional<String> type){
+    public DataResult<Map<String,Object>> getAllPagesOrderByEntity(@RequestParam int pageNumber, @RequestParam int pageSize, @RequestParam String entity, @RequestParam Optional<String> type){
         return this.categoryService.getAllPagesOrderByEntity(pageNumber,pageSize,entity,type.orElse(" "));
     }
 }

@@ -70,11 +70,11 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public DataResult<ReadCustomerResponse> getById(String id) {
+    public DataResult<ReadCustomerResponse> getById(String customerId) {
 
-        checkIfCustomerIdExist(id);
+        checkIfCustomerIdExist(customerId);
 
-        Customer customer = this.customerRepository.findById(id).get();
+        Customer customer = this.customerRepository.findById(customerId).get();
 
         ReadCustomerResponse readCustomerResponse = this.modelMapperService.forResponse()
                 .map(customer, ReadCustomerResponse.class);
@@ -107,6 +107,12 @@ public class CustomerManager implements CustomerService {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, SortingEntities.sortType(entity, type));
 
         return new SuccessDataResult<>(pageableMap(pageable));
+    }
+
+    @Override
+    public Customer getCustomerById(String customerId) {
+        checkIfCustomerIdExist(customerId);
+        return this.customerRepository.findById(customerId).get();
     }
 
     private Map<String, Object> pageableMap(Pageable pageable) {

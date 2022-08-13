@@ -102,6 +102,12 @@ public class ProductManager implements ProductService {
         return new SuccessDataResult<>( pageableMap(pageable));
     }
 
+    @Override
+    public Product getProductById(int productId) {
+        checkIfProductIdExist(productId);
+        return this.productRepository.findById(productId).get();
+    }
+
     private Map<String, Object> pageableMap(Pageable pageable) {
         Map<String, Object> response = new HashMap<>();
         Page<Product> products = productRepository.findAll(pageable);
@@ -134,10 +140,15 @@ public class ProductManager implements ProductService {
     }
     private void checkIfProductExistByName(String productName){
 
-        Product currentProduct=this.productRepository.findByProductName(productName);
+//        Product currentProduct=this.productRepository.findByProductName(productName);
+//        if (currentProduct!=null){
+//            throw new BusinessException("PRODUCT.ALREADY.EXIST");
+//        }
 
-        if (currentProduct!=null){
-            throw new BusinessException("PRODUCT.ALREADY.EXIST");
-        }
+        for(Product product:this.productRepository.findAll()){
+            if (product.getProductName().toUpperCase().equals(productName.toUpperCase())){
+                throw new BusinessException("PRODUCT.NAME.ALREADY.EXIST");
+            }
+       }
     }
 }

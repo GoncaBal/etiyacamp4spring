@@ -24,4 +24,6 @@ public interface OrderDetailService {
 
     DataResult<Map<String,Object>> getAllPages(int pageNumber, int pageSize);
     DataResult<Map<String,Object>> getAllPagesOrderByEntity(int pageNumber,int pageSize,String entity,String type);
+
+    OrderDetail getOrderDetailById(int orderId,int productId);
 }

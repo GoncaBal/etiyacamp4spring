@@ -44,6 +44,8 @@ public class OrderManager implements OrderService {
         this.orderRepository.save(order);
         return new SuccessResult("ORDER.ADDED");
 
+
+
     }
 
     @Override
@@ -91,6 +93,8 @@ public class OrderManager implements OrderService {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, SortingEntities.sortType(entity, type));
         return new SuccessDataResult<>(pageableMap(pageable));
     }
+
+
 
     private Map<String, Object> pageableMap(Pageable pageable) {
         Map<String, Object> response = new HashMap<>();

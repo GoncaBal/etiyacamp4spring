@@ -8,6 +8,7 @@ import com.etiya.northwind.business.responses.customers.CustomerListResponse;
 import com.etiya.northwind.business.responses.customers.ReadCustomerResponse;
 import com.etiya.northwind.core.utilities.results.DataResult;
 import com.etiya.northwind.core.utilities.results.Result;
+import com.etiya.northwind.entities.concretes.Customer;
 
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,10 @@ public interface CustomerService {
     Result add(CreateCustomerRequest createCustomerRequest);
     Result update(UpdateCustomerRequest updateCustomerRequest);
     Result delete(DeleteCustomerRequest deleteCustomerRequest);
-    DataResult<ReadCustomerResponse> getById(String id);
+    DataResult<ReadCustomerResponse> getById(String customerId);
     DataResult<List<CustomerListResponse>> getAll();
     DataResult<Map<String,Object>> getAllPages(int pageNumber,int pageSize);
     DataResult<Map<String,Object>> getAllPagesOrderByEntity(int pageNumber,int pageSize,String entity,String type);
+
+    Customer getCustomerById(String customerId);
 }

@@ -95,6 +95,11 @@ public class OrderDetailManager implements OrderDetailService {
         return new SuccessDataResult<>(pageableMap(pageable));
     }
 
+    @Override
+    public OrderDetail getOrderDetailById(int orderId,int productId) {
+        return this.orderDetailRepository.getByOrder_OrderIdAndProduct_ProductId(orderId,productId);
+    }
+
     private Map<String, Object> pageableMap(Pageable pageable) {
         Map<String, Object> response = new HashMap<>();
         Page<OrderDetail> orderDetails = orderDetailRepository.findAll(pageable);

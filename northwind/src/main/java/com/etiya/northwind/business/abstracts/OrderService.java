@@ -18,8 +18,8 @@ public interface OrderService {
     Result update(UpdateOrderRequest updateOrderRequest);
     Result delete(DeleteOrderRequest deleteOrderRequest);
     DataResult<ReadOrderResponse> getById(int id);
-
     DataResult<List<OrderListResponse>> getAll();
     DataResult<Map<String,Object>> getAllPages(int pageNumber, int pageSize);
     DataResult<Map<String,Object>> getAllPagesOrderByEntity(int pageNumber,int pageSize,String entity,String type);
+
 }

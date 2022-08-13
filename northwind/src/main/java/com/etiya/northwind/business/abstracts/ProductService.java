@@ -27,4 +27,6 @@ public interface ProductService {
     DataResult<Map<String, Object>> getAllPages(int pageNumber, int pageSize);
 
     DataResult<Map<String, Object>> getAllPagesOrderByEntity(int pageNumber, int pageSize, String entity, String type);
+
+    Product getProductById(int productId);
 }
